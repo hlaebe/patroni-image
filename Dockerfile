@@ -1,5 +1,5 @@
 FROM postgres:11
-LABEL author="Seo Cahill <seo@seocahill.com>"
+LABEL author="Holger Laebe"
 
 # Install patroni and WAL-e
 ENV PATRONIVERSION=1.6.5
