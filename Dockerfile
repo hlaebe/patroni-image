@@ -1,4 +1,5 @@
 FROM postgres:11
+ARG postgis
 LABEL author="Holger Laebe"
 
 # Install patroni and WAL-e
@@ -15,15 +16,15 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y \
             jq \
             # Required for wal-e
-            daemontools lzop pv \
-			postgresql-11-postgis-3 \
+            daemontools lzop pv \			
             # Required for /usr/local/bin/patroni
             python3 python3-setuptools python3-pystache python3-prettytable python3-six python3-psycopg2 \
             ${BUILD_PACKAGES} 
+RUN if [ "x$postgis" != "x" ]; then apt-get install -y postgresql-11-postgis-3 ; fi
 RUN mkdir -p /home/postgres \
     && chown postgres:postgres /home/postgres 
 RUN apt-get install -y libpq-dev
-RUN pip3 install pip --upgrade \
+RUN python3 -m pip install pip --upgrade \
     && pip3 install --upgrade patroni[etcd]==$PATRONIVERSION 
 RUN pip3 install --upgrade wal-e[aws]==$WALE_VERSION
 
