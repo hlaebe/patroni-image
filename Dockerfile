@@ -15,7 +15,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
 	&& curl -sL https://github.com/wal-g/wal-g/releases/download/$WALG_VERSION/wal-g.linux-amd64.tar.gz \
                 | tar -C /usr/local/bin -xz \
-    && strip /usr/local/bin/wal-g \
     && apt-get install -y \
             jq \
             # Required for wal-e
